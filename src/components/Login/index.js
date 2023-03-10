@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import ThemeContext from '../../context/ThemeContext'
 import './index.css'
@@ -60,6 +61,10 @@ class Login extends Component {
 
   render() {
     const {inputType, username, password, errorMsg} = this.state
+    const jwtToken = Cookies.get('jwt_token')
+    if (jwtToken !== undefined) {
+      return <Redirect to="/" />
+    }
     return (
       <ThemeContext.Consumer>
         {value => {
