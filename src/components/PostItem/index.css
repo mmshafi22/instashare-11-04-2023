@@ -1,0 +1,78 @@
+.post-item {
+  width: 100%;
+  border-bottom: 1px solid #dbdbdb;
+  margin-bottom: 10px;
+}
+.user-name {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.user-name h1 {
+  font-family: Roboto;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+.user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(to right, #e20337, #c60188, #7700c3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+.user-img img {
+  width: 90%;
+  border-radius: 50%;
+  border: 2px solid #fefefe;
+}
+.post-img {
+  width: 100%;
+  height: 500px;
+}
+.like-share-comment {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+}
+.btn-like {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 25px;
+  display: flex;
+  align-items: center;
+}
+.likes-text {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: bold;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  margin: 0px;
+}
+.post-icon {
+  margin-left: 20px;
+}
+.caption {
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 400;
+  padding-left: 20px;
+  margin: 0px;
+  padding-bottom: 10px;
+}
+.time {
+  font-family: Roboto;
+  font-size: 15px;
+  color: #989898;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  margin: 0px;
+}

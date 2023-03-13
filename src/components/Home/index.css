@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
 }
 .home-dark {
   background-color: #0f0f0f;
@@ -14,6 +15,7 @@
   width: 80%;
   max-width: 850px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 h1 {
   margin: 0px;
@@ -87,4 +89,31 @@ h1 {
   font-size: 12px;
   font-weight: bold;
   color: #0f0f0f;
+}
+.post-container {
+  width: 90%;
+  max-width: 850px;
+  border-radius: 5px;
+  border: 1px solid #dbdbdb;
+}
+.home-loading-container {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.post-list-items {
+  padding-left: 0px;
+  list-style-type: none;
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .error-dark-heading {
+    font-size: 15px;
+  }
+  .error-light-heading {
+    font-size: 15px;
+  }
 }

@@ -6,6 +6,7 @@ import Loader from 'react-loader-spinner'
 import {AiFillWarning} from 'react-icons/ai'
 import ThemeContext from '../../context/ThemeContext'
 import Navbar from '../Navbar'
+import PostItem from '../PostItem'
 import './index.css'
 
 const apiStatus = {
@@ -25,6 +26,13 @@ const settings = {
     {
       breakpoint: 1024,
       settings: {
+        slidesToShow: 5,
+        slidesToScroll: 2,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
         slidesToShow: 4,
         slidesToScroll: 2,
       },
@@ -42,6 +50,45 @@ class Home extends Component {
 
   componentDidMount() {
     this.getStories()
+    this.getPosts()
+  }
+
+  getPosts = async () => {
+    this.setState({postStatus: apiStatus.inProgress})
+    const jwtToken = Cookies.get('jwt_token')
+    const url = 'https://apis.ccbp.in/insta-share/posts'
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: 'GET',
+    }
+    const response = await fetch(url, options)
+    const data = await response.json()
+    if (response.ok) {
+      const {posts} = data
+      const updatedData = posts.map(each => ({
+        postId: each.post_id,
+        userId: each.user_id,
+        userName: each.user_name,
+        profilePic: each.profile_pic,
+        postDetails: {
+          imageUrl: each.post_details.image_url,
+          caption: each.post_details.caption,
+        },
+        likesCount: each.likes_count,
+        comments: each.comments.map(item => ({
+          userName: item.user_name,
+          userId: item.user_id,
+          comment: item.comment,
+        })),
+        createdAt: each.created_at,
+        likeStatus: false,
+      }))
+      this.setState({postsList: updatedData, postStatus: apiStatus.success})
+    } else {
+      this.setState({postStatus: apiStatus.failure})
+    }
   }
 
   getStories = async () => {
@@ -108,6 +155,17 @@ class Home extends Component {
     )
   }
 
+  renderPostSuccess = () => {
+    const {postsList} = this.state
+    return (
+      <ul className="post-list-items">
+        {postsList.map(each => (
+          <PostItem details={each} key={each.postId} />
+        ))}
+      </ul>
+    )
+  }
+
   renderFailureView = () => (
     <ThemeContext.Consumer>
       {val => {
@@ -135,9 +193,46 @@ class Home extends Component {
     </ThemeContext.Consumer>
   )
 
+  renderPostFailure = () => (
+    <ThemeContext.Consumer>
+      {val => {
+        const {isDarkMode} = val
+        return (
+          <div className="home-loading-container">
+            <div className="loader-container">
+              <AiFillWarning color="#4094EF" size={22} />
+              <h1
+                className={
+                  isDarkMode ? 'error-dark-heading' : 'error-light-heading'
+                }
+              >
+                Something Went Wrong. Please try again
+              </h1>
+              <button
+                type="button"
+                className="btn-try-again"
+                onClick={() => this.getPosts()}
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        )
+      }}
+    </ThemeContext.Consumer>
+  )
+
   renderLoaderView = () => (
     <div className="loader-container">
       <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
+    </div>
+  )
+
+  renderPostLoading = () => (
+    <div className="home-loading-container">
+      <div className="loader-container">
+        <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
+      </div>
     </div>
   )
 
@@ -150,6 +245,20 @@ class Home extends Component {
         return this.renderSuccessView()
       case apiStatus.failure:
         return this.renderFailureView()
+      default:
+        return null
+    }
+  }
+
+  renderPostsStatus = () => {
+    const {postStatus} = this.state
+    switch (postStatus) {
+      case apiStatus.success:
+        return this.renderPostSuccess()
+      case apiStatus.failure:
+        return this.renderPostFailure()
+      case apiStatus.inProgress:
+        return this.renderPostLoading()
       default:
         return null
     }
@@ -169,6 +278,7 @@ class Home extends Component {
                 <div className="slick-container">
                   {this.renderStoriesStatus()}
                 </div>
+                <div className="post-container">{this.renderPostsStatus()}</div>
               </div>
             </>
           )
