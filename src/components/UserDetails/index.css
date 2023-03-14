@@ -1,0 +1,15 @@
+.user-bg-dark {
+  background-color: #0f0f0f;
+  height: 100vh;
+}
+.user-bg-light {
+  background-color: #fafafa;
+  height: 100vh;
+}
+.user-loading-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

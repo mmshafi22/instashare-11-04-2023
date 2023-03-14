@@ -38,7 +38,11 @@ class Navbar extends Component {
               <div className={`mobile-container ${navBgColor}`}>
                 <nav className={`mobile-view-nav ${navBgColor}`}>
                   <div className="nav-logo-container">
-                    <Link to="/" className="link">
+                    <Link
+                      to="/"
+                      className="link"
+                      onClick={() => changeCategory('Home')}
+                    >
                       <img
                         src="https://res.cloudinary.com/shafi-tech/image/upload/v1678364614/Group_fnwezk.png"
                         alt="website logo"

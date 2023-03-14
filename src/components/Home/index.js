@@ -119,6 +119,39 @@ class Home extends Component {
     }
   }
 
+  likeThePost = async id => {
+    const {postsList} = this.state
+    const jwtToken = Cookies.get('jwt_token')
+    const obj = postsList.find(each => each.postId === id)
+    const status = {like_status: !obj.likesStatus}
+    const url = `https://apis.ccbp.in/insta-share/posts/${id}/like`
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: 'POST',
+      body: JSON.stringify(status),
+    }
+    const response = await fetch(url, options)
+    if (obj.likeStatus) {
+      this.setState(prev => ({
+        postsList: prev.postsList.map(item =>
+          item.postId === id
+            ? {...item, likeStatus: false, likesCount: item.likesCount - 1}
+            : {...item},
+        ),
+      }))
+    } else {
+      this.setState(prev => ({
+        postsList: prev.postsList.map(item =>
+          item.postId === id
+            ? {...item, likeStatus: true, likesCount: item.likesCount + 1}
+            : {...item},
+        ),
+      }))
+    }
+  }
+
   renderSuccessView = () => {
     const {storiesList} = this.state
     return (
@@ -160,7 +193,11 @@ class Home extends Component {
     return (
       <ul className="post-list-items">
         {postsList.map(each => (
-          <PostItem details={each} key={each.postId} />
+          <PostItem
+            details={each}
+            key={each.postId}
+            likeThePost={this.likeThePost}
+          />
         ))}
       </ul>
     )
