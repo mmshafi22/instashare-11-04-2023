@@ -1,0 +1,126 @@
+.user-page-container {
+  width: 90%;
+  max-width: 850px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+.user-profile {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.name-details h1 {
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  margin: 0px;
+  padding-bottom: 15px;
+}
+.user-profile-mobile h1 {
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  margin: 0px;
+  padding-bottom: 15px;
+}
+.user-name-dark {
+  color: #fefefe;
+}
+.user-name-light {
+  color: #262626;
+}
+.user-profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+.user-data {
+  display: flex;
+  align-items: center;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+.user-data span {
+  font-weight: bold;
+}
+.user-data p {
+  margin: 0px;
+  margin-right: 15px;
+}
+.user-id {
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 15px;
+  margin: 0px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.bio {
+  font-family: Roboto;
+  font-size: 15px;
+  margin: 0px;
+  font-weight: 300;
+}
+.profile-mobile-data {
+  display: flex;
+  align-items: center;
+}
+.count {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.count-num {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: bold;
+}
+.count-text {
+  font-family: Roboto;
+  font-size: 16px;
+}
+.stories-list-items {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  padding-left: 0px;
+}
+.story-item {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #c7c7cc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+.story-item img {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+}
+@media (max-width: 767px) {
+  .user-profile {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .user-profile-img {
+    width: 130px;
+    height: 130px;
+  }
+  .name-details h1 {
+    font-size: 25px;
+  }
+  .user-profile-mobile {
+    display: none;
+  }
+  .story-item {
+    width: 70px;
+    height: 70px;
+  }
+}
