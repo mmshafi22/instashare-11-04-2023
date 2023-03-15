@@ -33,7 +33,7 @@ const PostItem = props => {
               <Link
                 to={`/users/${userId}`}
                 className="link"
-                onClick={() => changeCategory('initial')}
+                onClick={() => changeCategory('users')}
               >
                 <h1 className={textColor}>{userName}</h1>
               </Link>

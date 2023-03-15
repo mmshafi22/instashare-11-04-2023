@@ -133,11 +133,12 @@ class Home extends Component {
       body: JSON.stringify(status),
     }
     const response = await fetch(url, options)
-    if (obj.likeStatus) {
+    const data = await response.json()
+    if (data.message === 'Post has been liked') {
       this.setState(prev => ({
         postsList: prev.postsList.map(item =>
           item.postId === id
-            ? {...item, likeStatus: false, likesCount: item.likesCount - 1}
+            ? {...item, likeStatus: true, likesCount: item.likesCount + 1}
             : {...item},
         ),
       }))
@@ -145,7 +146,7 @@ class Home extends Component {
       this.setState(prev => ({
         postsList: prev.postsList.map(item =>
           item.postId === id
-            ? {...item, likeStatus: true, likesCount: item.likesCount + 1}
+            ? {...item, likeStatus: false, likesCount: item.likesCount - 1}
             : {...item},
         ),
       }))
@@ -157,7 +158,7 @@ class Home extends Component {
     return (
       <ThemeContext.Consumer>
         {value => {
-          const {isDarkMode} = value
+          const {isDarkMode, changeCategory} = value
           return (
             <Slider {...settings}>
               {storiesList.map(each => {
@@ -166,6 +167,7 @@ class Home extends Component {
                   <Link
                     to={`/users/${userId}`}
                     className="home-link"
+                    onClick={() => changeCategory('users')}
                     key={userId}
                   >
                     <div className="story-container">

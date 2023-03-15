@@ -1,11 +1,10 @@
-import {MdGridOn} from 'react-icons/md'
+import {MdGridOn, MdPhotoCamera} from 'react-icons/md'
 import ThemeContext from '../../context/ThemeContext'
 import './index.css'
 
 const UserItem = props => {
   const {details} = props
   const {
-    id,
     userId,
     userName,
     profilePic,
@@ -20,13 +19,13 @@ const UserItem = props => {
   return (
     <ThemeContext.Consumer>
       {value => {
-        const {isDarkMode} = value
+        const {isDarkMode, category} = value
         return (
           <div className="user-page-container">
             <div className="user-profile">
               <img
                 src={profilePic}
-                alt="user Profile"
+                alt={category === 'Profile' ? 'my profile' : 'user profile'}
                 className="user-profile-img"
               />
               <div className="name-details">
@@ -73,7 +72,7 @@ const UserItem = props => {
               <div className="profile-mobile-data">
                 <img
                   src={profilePic}
-                  alt="user profile"
+                  alt={category === 'Profile' ? 'my profile' : 'user profile'}
                   className="user-profile-img"
                 />
                 <div className="user-data">
@@ -121,10 +120,56 @@ const UserItem = props => {
             <ul className="stories-list-items">
               {stories.map(each => (
                 <li className="story-item" key={each.id}>
-                  <img src={each.image} alt="user story" />
+                  <img
+                    src={each.image}
+                    alt={category === 'Profile' ? 'my story' : 'user story'}
+                  />
                 </li>
               ))}
             </ul>
+            <hr />
+            <div className="post-header">
+              <MdGridOn color={isDarkMode ? '#fafafa' : '#262626'} size={22} />
+              <p
+                className={`user-id ${
+                  isDarkMode ? 'user-name-dark' : 'user-name-light'
+                }`}
+              >
+                Posts
+              </p>
+            </div>
+            {postsCount > 0 ? (
+              <ul className="stories-list-items">
+                {posts.map(item => (
+                  <li className="post-image" key={item.id}>
+                    <img
+                      src={item.image}
+                      alt={category === 'Profile' ? 'my post' : 'user post'}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="no-post-container">
+                <div
+                  className={`icon-container ${
+                    isDarkMode ? 'icon-dark' : 'icon-light'
+                  }`}
+                >
+                  <MdPhotoCamera
+                    color={isDarkMode ? '#fafafa' : '#262626'}
+                    size={30}
+                  />
+                </div>
+                <h1
+                  className={`no-posts-text ${
+                    isDarkMode ? 'user-name-dark' : 'user-name-light'
+                  }`}
+                >
+                  No Posts Yet
+                </h1>
+              </div>
+            )}
           </div>
         )
       }}
