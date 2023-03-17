@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import {Link, withRouter} from 'react-router-dom'
 import {IoMdClose} from 'react-icons/io'
 import {FiSun} from 'react-icons/fi'
-import {FaMoon} from 'react-icons/fa'
+import {FaMoon, FaSearch} from 'react-icons/fa'
 import {GiHamburgerMenu} from 'react-icons/gi'
 import ThemeContext from '../../context/ThemeContext'
 import './index.css'
@@ -30,7 +30,16 @@ class Navbar extends Component {
     return (
       <ThemeContext.Consumer>
         {value => {
-          const {isDarkMode, changeTheme, changeCategory, category} = value
+          const {
+            isDarkMode,
+            changeTheme,
+            changeCategory,
+            category,
+            searchInput,
+            changeFocus,
+            onChangeUsername,
+            getSearchResults,
+          } = value
           const navBgColor = isDarkMode ? 'nav-dark' : 'nav-light'
           const navColor = isDarkMode ? 'nav-color-dark' : 'nav-color-light'
           return (
@@ -81,15 +90,15 @@ class Navbar extends Component {
                 {menu && (
                   <div className="mobile-menu-items">
                     <ul className="nav-items-list">
-                      <Link className={`link ${navColor}`} to="/search">
-                        <li
-                          className={category === 'Search' ? 'active' : ''}
-                          onClick={() => changeCategory('Search')}
-                          key="SEARCH"
-                        >
-                          Search
-                        </li>
-                      </Link>
+                      <li
+                        className={`${navColor} ${
+                          category === 'Search' ? 'active' : ''
+                        }`}
+                        onClick={() => changeFocus()}
+                        key="SEARCH"
+                      >
+                        Search
+                      </li>
                       <Link className={`link ${navColor}`} to="/">
                         <li
                           className={category === 'Home' ? 'active' : ''}
@@ -143,6 +152,28 @@ class Navbar extends Component {
                   <h1 className={`nav-heading ${navColor}`}>Insta Share</h1>
                 </div>
                 <ul className="nav-items-list">
+                  <li className="nav-search" key="Search">
+                    <input
+                      type="search"
+                      className={
+                        isDarkMode ? 'nav-input-dark' : 'nav-input-light'
+                      }
+                      onFocus={() => changeFocus()}
+                      onChange={event => onChangeUsername(event.target.value)}
+                      value={searchInput}
+                      placeholder="Search Caption"
+                    />
+                    <button
+                      type="button"
+                      className={`nav-search-icon ${
+                        isDarkMode ? 'nav-icon-dark' : 'nav-icon-light'
+                      }`}
+                      onClick={() => getSearchResults()}
+                      testid="searchIcon"
+                    >
+                      <FaSearch color="#262626" size={18} />
+                    </button>
+                  </li>
                   <li>
                     <button
                       type="button"
@@ -162,15 +193,6 @@ class Navbar extends Component {
                       )}
                     </button>
                   </li>
-                  <Link className={`link ${navColor}`} to="/search">
-                    <li
-                      className={category === 'Search' ? 'active' : ''}
-                      onClick={() => changeCategory('Search')}
-                      key="SEARCH"
-                    >
-                      Search
-                    </li>
-                  </Link>
                   <Link className={`link ${navColor}`} to="/">
                     <li
                       className={category === 'Home' ? 'active' : ''}

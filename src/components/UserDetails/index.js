@@ -59,7 +59,7 @@ class UserDetails extends Component {
   }
 
   renderLoader = () => (
-    <div className="user-loading-container">
+    <div className="user-loading-container" testid="loader">
       <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
     </div>
   )
@@ -72,7 +72,7 @@ class UserDetails extends Component {
           <div className="user-loading-container">
             <img
               src="https://res.cloudinary.com/shafi-tech/image/upload/v1678789524/Group_7522_qi3cbr.png"
-              alt="failure img"
+              alt="failure view"
               className="failure-img"
             />
             <h1 className={isDarkMode ? 'fail-dark' : 'fail-light'}>

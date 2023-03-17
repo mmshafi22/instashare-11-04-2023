@@ -56,7 +56,7 @@ class Profile extends Component {
   }
 
   renderProfileLoader = () => (
-    <div className="profile-loading-container">
+    <div className="profile-loading-container" testid="loader">
       <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
     </div>
   )
@@ -69,7 +69,7 @@ class Profile extends Component {
           <div className="profile-loading-container">
             <img
               src="https://res.cloudinary.com/shafi-tech/image/upload/v1678789524/Group_7522_qi3cbr.png"
-              alt="failure img"
+              alt="failure view"
               className="profile-failure-img"
             />
             <h1

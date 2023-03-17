@@ -6,8 +6,8 @@ import {BiShareAlt} from 'react-icons/bi'
 import ThemeContext from '../../context/ThemeContext'
 import './index.css'
 
-const PostItem = props => {
-  const {details, likeThePost} = props
+const SearchItem = props => {
+  const {details} = props
   const {
     postId,
     userId,
@@ -16,18 +16,18 @@ const PostItem = props => {
     postDetails,
     likesCount,
     createdAt,
-    likeStatus,
+    likesStatus,
   } = details
   const {imageUrl, caption} = postDetails
   return (
     <ThemeContext.Consumer>
       {value => {
-        const {isDarkMode, changeCategory} = value
-        const textColor = isDarkMode ? 'text-dark' : 'text-light'
+        const {isDarkMode, changeCategory, onClickLike} = value
+        const textColor = isDarkMode ? 'search-text-dark' : 'search-text-light'
         return (
-          <li className="post-item">
-            <div className="user-name">
-              <div className="user-img">
+          <li className="search-item">
+            <div className="search-name">
+              <div className="search-user-img">
                 <img src={profilePic} alt="post author profile" />
               </div>
               <Link
@@ -38,13 +38,13 @@ const PostItem = props => {
                 <h1 className={textColor}>{userName}</h1>
               </Link>
             </div>
-            <img src={imageUrl} alt="post" className="post-img" />
-            <div className="like-share-comment">
-              {likeStatus ? (
+            <img src={imageUrl} alt="post" className="search-post-img" />
+            <div className="search-like-share-comment">
+              {likesStatus ? (
                 <button
                   type="button"
-                  className="btn-like"
-                  onClick={() => likeThePost(postId)}
+                  className="search-btn-like"
+                  onClick={() => onClickLike(postId)}
                   testid="unLikeIcon"
                 >
                   <FcLike size={20} />
@@ -52,8 +52,8 @@ const PostItem = props => {
               ) : (
                 <button
                   type="button"
-                  className="btn-like"
-                  onClick={() => likeThePost(postId)}
+                  className="search-btn-like"
+                  onClick={() => onClickLike(postId)}
                   testid="likeIcon"
                 >
                   <BsHeart
@@ -64,18 +64,20 @@ const PostItem = props => {
               )}
               <FaRegComment
                 size={22}
-                className="post-icon"
+                className="search-post-icon"
                 color={isDarkMode ? '#fefefe' : '#475569'}
               />
               <BiShareAlt
                 size={22}
-                className="post-icon"
+                className="search-post-icon"
                 color={isDarkMode ? '#fefefe' : '#475569'}
               />
             </div>
-            <p className={`likes-text ${textColor}`}>{likesCount} likes</p>
-            <p className={`caption ${textColor}`}>{caption}</p>
-            <p className="time">{createdAt}</p>
+            <p className={`search-likes-text ${textColor}`}>
+              {likesCount} likes
+            </p>
+            <p className={`search-caption ${textColor}`}>{caption}</p>
+            <p className="search-time">{createdAt}</p>
           </li>
         )
       }}
@@ -83,4 +85,4 @@ const PostItem = props => {
   )
 }
 
-export default PostItem
+export default SearchItem

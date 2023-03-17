@@ -1,11 +1,12 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import Slider from 'react-slick'
 import Loader from 'react-loader-spinner'
 import {AiFillWarning} from 'react-icons/ai'
 import ThemeContext from '../../context/ThemeContext'
 import Navbar from '../Navbar'
+import SearchPage from '../SearchPage'
 import PostItem from '../PostItem'
 import './index.css'
 
@@ -123,7 +124,7 @@ class Home extends Component {
     const {postsList} = this.state
     const jwtToken = Cookies.get('jwt_token')
     const obj = postsList.find(each => each.postId === id)
-    const status = {like_status: !obj.likesStatus}
+    const status = {like_status: !obj.likeStatus}
     const url = `https://apis.ccbp.in/insta-share/posts/${id}/like`
     const options = {
       headers: {
@@ -262,14 +263,14 @@ class Home extends Component {
   )
 
   renderLoaderView = () => (
-    <div className="loader-container">
+    <div className="loader-container" testid="loader">
       <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
     </div>
   )
 
   renderPostLoading = () => (
     <div className="home-loading-container">
-      <div className="loader-container">
+      <div className="loader-container" testid="loader">
         <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
       </div>
     </div>
@@ -304,21 +305,31 @@ class Home extends Component {
   }
 
   render() {
+    const jwtToken = Cookies.get('jwt_token')
+    if (jwtToken === undefined) {
+      return <Redirect to="/login" />
+    }
     return (
       <ThemeContext.Consumer>
         {value => {
-          const {isDarkMode} = value
+          const {isDarkMode, isFocused} = value
           const HomeBgColor = isDarkMode ? 'home-dark' : 'home-light'
 
           return (
             <>
               <Navbar />
-              <div className={`home-bg-container ${HomeBgColor}`}>
-                <div className="slick-container">
-                  {this.renderStoriesStatus()}
+              {isFocused ? (
+                <SearchPage />
+              ) : (
+                <div className={`home-bg-container ${HomeBgColor}`}>
+                  <div className="slick-container">
+                    {this.renderStoriesStatus()}
+                  </div>
+                  <div className="post-container">
+                    {this.renderPostsStatus()}
+                  </div>
                 </div>
-                <div className="post-container">{this.renderPostsStatus()}</div>
-              </div>
+              )}
             </>
           )
         }}

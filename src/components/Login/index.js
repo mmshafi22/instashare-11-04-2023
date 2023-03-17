@@ -93,7 +93,7 @@ class Login extends Component {
                     value={username}
                     type="text"
                     id="username"
-                    className={color}
+                    className="text-light"
                     onChange={this.onChangeUsername}
                   />
                   <label className={`label-text ${color}`} htmlFor="password">
@@ -103,7 +103,7 @@ class Login extends Component {
                     type={inputType ? 'password' : 'text'}
                     value={password}
                     id="password"
-                    className={color}
+                    className="text-light"
                     onChange={this.onChangePassword}
                   />
                   {errorMsg.length !== 0 ? (

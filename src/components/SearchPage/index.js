@@ -1,11 +1,11 @@
 import {Component} from 'react'
-import Cookies from 'js-cookie'
-import {BsSearch} from 'react-icons/bs'
+import Loader from 'react-loader-spinner'
+import {FaSearch} from 'react-icons/fa'
 import ThemeContext from '../../context/ThemeContext'
-import Navbar from '../Navbar'
+import SearchItem from '../SearchItem'
 import './index.css'
 
-const searchStatus = {
+const search = {
   initial: 'INITIAL',
   success: 'SUCCESS',
   failure: 'FAILURE',
@@ -13,48 +13,6 @@ const searchStatus = {
 }
 
 class SearchPage extends Component {
-  state = {
-    searchInput: '',
-    searchLoading: searchStatus.initial,
-    searchResults: [],
-  }
-
-  getSearchResults = async () => {
-    this.setState({searchLoading: searchStatus.inProgress})
-    const jwtToken = Cookies.get('jwt_token')
-    const {searchInput} = this.state
-    const url = `https://apis.ccbp.in/insta-share/posts?search=${searchInput}`
-    const options = {
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-      method: 'GET',
-    }
-    const response = await fetch(url, options)
-    const data = await response.json()
-    if (response.ok) {
-      const {posts} = data
-      const updatedList = posts.map(each => ({
-        postId: each.post_id,
-        userId: each.user_id,
-        userName: each.user_name,
-        profilePic: each.profile_pic,
-        postDetails: {
-          imageUrl: each.post_details.image_url,
-          caption: each.post_details.caption,
-        },
-        likesCount: each.likes_count,
-        createdAt: each.created_at,
-      }))
-      this.setState({
-        searchResults: updatedList,
-        searchLoading: searchStatus.inProgress,
-      })
-    } else {
-      this.setState({searchLoading: searchStatus.failure})
-    }
-  }
-
   renderSearchInitial = () => (
     <div className="initial-loading">
       <img
@@ -65,51 +23,149 @@ class SearchPage extends Component {
     </div>
   )
 
-  renderSearchResults = () => {
-    const {searchLoading} = this.state
-    switch (searchLoading) {
-      case searchStatus.success:
-        return this.renderSearchSuccess()
-      case searchStatus.failure:
-        return this.renderSearchFailure()
-      case searchStatus.inProgress:
-        return this.renderSearchLoading()
-      case searchStatus.initial:
-        return this.renderSearchInitial()
-      default:
-        return null
-    }
-  }
+  renderSearchNotFound = () => (
+    <ThemeContext.Consumer>
+      {value => {
+        const {isDarkMode, getSearchResults} = value
+        return (
+          <div className="initial-loading">
+            <img
+              src="https://res.cloudinary.com/shafi-tech/image/upload/v1678959251/Group_2_gqkryu.png"
+              alt="search not found"
+              className="search-failure-img"
+            />
+            <h1
+              className={isDarkMode ? 'search-fail-dark' : 'search-fail-light'}
+            >
+              Search Not Found
+            </h1>
+            <p className="fail-caption">
+              Try different keyword or search again
+            </p>
+            <button
+              className="search-btn-try-again"
+              type="button"
+              onClick={() => getSearchResults()}
+            >
+              Try Again
+            </button>
+          </div>
+        )
+      }}
+    </ThemeContext.Consumer>
+  )
+
+  renderSearchLoading = () => (
+    <div className="initial-loading" testid="loader">
+      <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
+    </div>
+  )
+
+  renderSearchFailure = () => (
+    <ThemeContext.Consumer>
+      {value => {
+        const {isDarkMode, getSearchResults} = value
+        return (
+          <div className="initial-loading">
+            <img
+              src="https://res.cloudinary.com/shafi-tech/image/upload/v1678789524/Group_7522_qi3cbr.png"
+              alt="failure view"
+              className="search-failure-img"
+            />
+            <h1
+              className={isDarkMode ? 'search-fail-dark' : 'search-fail-light'}
+            >
+              Something Went Wrong. Please try again
+            </h1>
+            <button
+              className="search-btn-try-again"
+              type="button"
+              onClick={() => getSearchResults()}
+            >
+              Try Again
+            </button>
+          </div>
+        )
+      }}
+    </ThemeContext.Consumer>
+  )
+
+  renderSearchSuccess = () => (
+    <ThemeContext.Consumer>
+      {value => {
+        const {searchList} = value
+        if (searchList.length === 0) {
+          return this.renderSearchNotFound()
+        }
+        return (
+          <ul className="search-list-items">
+            {searchList.map(each => (
+              <SearchItem details={each} key={each.postId} />
+            ))}
+          </ul>
+        )
+      }}
+    </ThemeContext.Consumer>
+  )
+
+  renderSearchResults = () => (
+    <ThemeContext.Consumer>
+      {value => {
+        const {searchLoading} = value
+        switch (searchLoading) {
+          case search.success:
+            return this.renderSearchSuccess()
+          case search.failure:
+            return this.renderSearchNotFound()
+          case search.inProgress:
+            return this.renderSearchLoading()
+          case search.initial:
+            return this.renderSearchInitial()
+          default:
+            return null
+        }
+      }}
+    </ThemeContext.Consumer>
+  )
 
   render() {
     return (
       <ThemeContext.Consumer>
         {value => {
-          const {isDarkMode} = value
+          const {
+            isDarkMode,
+            changeFocus,
+            searchInput,
+            onChangeUsername,
+            getSearchResults,
+          } = value
           const bgColor = isDarkMode ? 'search-dark' : 'search-light'
           return (
-            <>
-              <Navbar />
-              <div className={`search-page-container ${bgColor}`}>
-                <div className="search-container">
-                  <div className="input-search">
-                    <input
-                      type="search"
-                      className={isDarkMode ? 'input-dark' : 'input-light'}
-                    />
-                    <button
-                      type="button"
-                      className={`search-icon ${
-                        isDarkMode ? 'icon-dark' : 'icon-light'
-                      }`}
-                    >
-                      <BsSearch color="#262626" size={18} />
-                    </button>
-                  </div>
-                  {this.renderSearchResults()}
+            <div className={`search-page-container ${bgColor}`}>
+              <div className="search-container">
+                <div className="input-search">
+                  <input
+                    type="search"
+                    className={isDarkMode ? 'input-dark' : 'input-light'}
+                    onFocus={() => changeFocus()}
+                    onChange={event => onChangeUsername(event.target.value)}
+                    value={searchInput}
+                    placeholder="Search Caption"
+                  />
+                  <button
+                    type="button"
+                    className={`search-icon ${
+                      isDarkMode ? 'icon-dark' : 'icon-light'
+                    }`}
+                    onClick={() => getSearchResults()}
+                    testid="searchIcon"
+                  >
+                    <FaSearch color="#262626" size={18} />
+                  </button>
                 </div>
+                {this.renderSearchResults()}
               </div>
-            </>
+            </div>
           )
         }}
       </ThemeContext.Consumer>
