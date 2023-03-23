@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import ThemeContext from '../../context/ThemeContext'
 import Navbar from '../Navbar'
-import UserItem from '../UserItem'
+import ProfileItem from '../ProfileItem'
 import './index.css'
 
 const profileStatus = {
@@ -72,19 +72,19 @@ class Profile extends Component {
               alt="failure view"
               className="profile-failure-img"
             />
-            <h1
+            <p
               className={
                 isDarkMode ? 'profile-fail-dark' : 'profile-fail-light'
               }
             >
               Something Went Wrong. Please try again
-            </h1>
+            </p>
             <button
               className="profile-btn-try-again"
               type="button"
               onClick={() => this.getProfileDetails()}
             >
-              Try Again
+              Try again
             </button>
           </div>
         )
@@ -94,7 +94,7 @@ class Profile extends Component {
 
   renderProfileSuccessPage = () => {
     const {profileList} = this.state
-    return <UserItem details={profileList} />
+    return <ProfileItem details={profileList} />
   }
 
   renderProfileDetails = () => {

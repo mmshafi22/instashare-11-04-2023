@@ -17,6 +17,7 @@ const PostItem = props => {
     likesCount,
     createdAt,
     likeStatus,
+    comments,
   } = details
   const {imageUrl, caption} = postDetails
   return (
@@ -25,7 +26,7 @@ const PostItem = props => {
         const {isDarkMode, changeCategory} = value
         const textColor = isDarkMode ? 'text-dark' : 'text-light'
         return (
-          <li className="post-item">
+          <li className="post-item" testid="postItem">
             <div className="user-name">
               <div className="user-img">
                 <img src={profilePic} alt="post author profile" />
@@ -74,6 +75,14 @@ const PostItem = props => {
               />
             </div>
             <p className={`likes-text ${textColor}`}>{likesCount} likes</p>
+            {comments.map(item => (
+              <p key={item.userId} className={`caption ${textColor}`}>
+                <span className={`post-username ${textColor}`}>
+                  {item.userName}
+                </span>
+                {item.comment}
+              </p>
+            ))}
             <p className={`caption ${textColor}`}>{caption}</p>
             <p className="time">{createdAt}</p>
           </li>

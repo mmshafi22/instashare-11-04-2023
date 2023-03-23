@@ -99,24 +99,24 @@ class Navbar extends Component {
                       >
                         Search
                       </li>
-                      <Link className={`link ${navColor}`} to="/">
-                        <li
-                          className={category === 'Home' ? 'active' : ''}
-                          onClick={() => changeCategory('Home')}
-                          key="HOME"
-                        >
+                      <li
+                        className={category === 'Home' ? 'active' : ''}
+                        onClick={() => changeCategory('Home')}
+                        key="HOME"
+                      >
+                        <Link className={`link ${navColor}`} to="/">
                           Home
-                        </li>
-                      </Link>
-                      <Link className={`link ${navColor}`} to="/my-profile">
-                        <li
-                          className={category === 'Profile' ? 'active' : ''}
-                          onClick={() => changeCategory('Profile')}
-                          key="PROFILE"
-                        >
+                        </Link>
+                      </li>
+                      <li
+                        className={category === 'Profile' ? 'active' : ''}
+                        onClick={() => changeCategory('Profile')}
+                        key="PROFILE"
+                      >
+                        <Link className={`link ${navColor}`} to="/my-profile">
                           Profile
-                        </li>
-                      </Link>
+                        </Link>
+                      </li>
                       <li>
                         <button
                           type="button"
@@ -142,7 +142,11 @@ class Navbar extends Component {
               </div>
               <nav className={`large-mobile-view-nav ${navBgColor}`}>
                 <div className="nav-logo-container">
-                  <Link to="/" className="link">
+                  <Link
+                    to="/"
+                    className="link"
+                    onClick={() => changeCategory('Home')}
+                  >
                     <img
                       src="https://res.cloudinary.com/shafi-tech/image/upload/v1678364614/Group_fnwezk.png"
                       alt="website logo"
@@ -193,24 +197,24 @@ class Navbar extends Component {
                       )}
                     </button>
                   </li>
-                  <Link className={`link ${navColor}`} to="/">
-                    <li
-                      className={category === 'Home' ? 'active' : ''}
-                      onClick={() => changeCategory('Home')}
-                      key="HOME"
-                    >
+                  <li
+                    className={category === 'Home' ? 'active' : ''}
+                    onClick={() => changeCategory('Home')}
+                    key="HOME"
+                  >
+                    <Link className={`link ${navColor}`} to="/">
                       Home
-                    </li>
-                  </Link>
-                  <Link className={`link ${navColor}`} to="/my-profile">
-                    <li
-                      className={category === 'Profile' ? 'active' : ''}
-                      onClick={() => changeCategory('Profile')}
-                      key="PROFILE"
-                    >
+                    </Link>
+                  </li>
+                  <li
+                    className={category === 'Profile' ? 'active' : ''}
+                    onClick={() => changeCategory('Profile')}
+                    key="PROFILE"
+                  >
+                    <Link className={`link ${navColor}`} to="/my-profile">
                       Profile
-                    </li>
-                  </Link>
+                    </Link>
+                  </li>
                   <li>
                     <button
                       type="button"

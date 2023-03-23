@@ -75,15 +75,15 @@ class UserDetails extends Component {
               alt="failure view"
               className="failure-img"
             />
-            <h1 className={isDarkMode ? 'fail-dark' : 'fail-light'}>
+            <p className={isDarkMode ? 'fail-dark' : 'fail-light'}>
               Something Went Wrong. Please try again
-            </h1>
+            </p>
             <button
               className="user-btn-try-again"
               type="button"
               onClick={() => this.getUserDetails()}
             >
-              Try Again
+              Try again
             </button>
           </div>
         )

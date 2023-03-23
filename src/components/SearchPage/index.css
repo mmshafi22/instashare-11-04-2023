@@ -152,3 +152,22 @@
   width: 100%;
   padding: 15px;
 }
+.search-results-container {
+  width: 100%;
+}
+.search-heading {
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: bold;
+}
+.search-dark {
+  color: #fefefe;
+}
+.search-light {
+  color: #262626;
+}
+@media (min-width: 768px) {
+  .search-heading {
+    font-size: 30px;
+  }
+}

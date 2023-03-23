@@ -121,12 +121,9 @@ class Login extends Component {
                       className="check-box"
                       onChange={this.onCheckBox}
                     />
-                    <label
-                      htmlFor="checkbox"
-                      className={`label-check ${color}`}
-                    >
+                    <span htmlFor="checkbox" className={`label-check ${color}`}>
                       Show Password
-                    </label>
+                    </span>
                   </div>
                 </form>
               </div>

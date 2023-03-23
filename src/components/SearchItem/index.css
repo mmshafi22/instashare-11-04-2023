@@ -85,3 +85,10 @@
 .search-text-light {
   color: #262626;
 }
+.span-username {
+  font-weight: bold;
+  padding-right: 15px;
+}
+.post-username {
+  font-weight: bold;
+}

@@ -17,6 +17,7 @@ const SearchItem = props => {
     likesCount,
     createdAt,
     likesStatus,
+    comments,
   } = details
   const {imageUrl, caption} = postDetails
   return (
@@ -25,18 +26,20 @@ const SearchItem = props => {
         const {isDarkMode, changeCategory, onClickLike} = value
         const textColor = isDarkMode ? 'search-text-dark' : 'search-text-light'
         return (
-          <li className="search-item">
+          <li className="search-item" testid="searchItem">
             <div className="search-name">
               <div className="search-user-img">
                 <img src={profilePic} alt="post author profile" />
               </div>
-              <Link
-                to={`/users/${userId}`}
-                className="link"
-                onClick={() => changeCategory('users')}
-              >
-                <h1 className={textColor}>{userName}</h1>
-              </Link>
+              <h1 className={textColor}>
+                <Link
+                  to={`/users/${userId}`}
+                  className={`link ${textColor}`}
+                  onClick={() => changeCategory('users')}
+                >
+                  {userName}
+                </Link>
+              </h1>
             </div>
             <img src={imageUrl} alt="post" className="search-post-img" />
             <div className="search-like-share-comment">
@@ -76,6 +79,14 @@ const SearchItem = props => {
             <p className={`search-likes-text ${textColor}`}>
               {likesCount} likes
             </p>
+            {comments.map(item => (
+              <p key={item.user_id} className={`search-caption ${textColor}`}>
+                <span className={`span-username ${textColor}`}>
+                  {item.user_name}
+                </span>
+                {item.comment}
+              </p>
+            ))}
             <p className={`search-caption ${textColor}`}>{caption}</p>
             <p className="search-time">{createdAt}</p>
           </li>

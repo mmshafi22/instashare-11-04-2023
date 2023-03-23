@@ -47,7 +47,7 @@ class SearchPage extends Component {
               type="button"
               onClick={() => getSearchResults()}
             >
-              Try Again
+              Try again
             </button>
           </div>
         )
@@ -72,17 +72,17 @@ class SearchPage extends Component {
               alt="failure view"
               className="search-failure-img"
             />
-            <h1
+            <p
               className={isDarkMode ? 'search-fail-dark' : 'search-fail-light'}
             >
-              Something Went Wrong. Please try again
-            </h1>
+              Something went wrong. Please try again
+            </p>
             <button
               className="search-btn-try-again"
               type="button"
               onClick={() => getSearchResults()}
             >
-              Try Again
+              Try again
             </button>
           </div>
         )
@@ -93,16 +93,20 @@ class SearchPage extends Component {
   renderSearchSuccess = () => (
     <ThemeContext.Consumer>
       {value => {
-        const {searchList} = value
+        const {searchList, isDarkMode} = value
+        const colorSearch = isDarkMode ? 'search-dark' : 'search-light'
         if (searchList.length === 0) {
           return this.renderSearchNotFound()
         }
         return (
-          <ul className="search-list-items">
-            {searchList.map(each => (
-              <SearchItem details={each} key={each.postId} />
-            ))}
-          </ul>
+          <div className="search-results-container">
+            <h1 className={`search-heading ${colorSearch}`}>Search Results</h1>
+            <ul className="search-list-items">
+              {searchList.map(each => (
+                <SearchItem details={each} key={each.postId} />
+              ))}
+            </ul>
+          </div>
         )
       }}
     </ThemeContext.Consumer>

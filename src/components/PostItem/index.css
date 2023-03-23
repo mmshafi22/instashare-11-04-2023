@@ -79,3 +79,7 @@
 .link {
   text-decoration: none;
 }
+.post-username {
+  font-weight: bold;
+  padding-right: 15px;
+}

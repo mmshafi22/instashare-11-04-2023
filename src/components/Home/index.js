@@ -3,7 +3,6 @@ import Cookies from 'js-cookie'
 import {Link, Redirect} from 'react-router-dom'
 import Slider from 'react-slick'
 import Loader from 'react-loader-spinner'
-import {AiFillWarning} from 'react-icons/ai'
 import ThemeContext from '../../context/ThemeContext'
 import Navbar from '../Navbar'
 import SearchPage from '../SearchPage'
@@ -212,20 +211,23 @@ class Home extends Component {
         const {isDarkMode} = val
         return (
           <div className="loader-container">
-            <AiFillWarning color="#4094EF" size={22} />
-            <h1
+            <img
+              src="https://res.cloudinary.com/shafi-tech/image/upload/v1679546355/Icon_m4tnrl.png"
+              alt="failure view"
+            />
+            <p
               className={
                 isDarkMode ? 'error-dark-heading' : 'error-light-heading'
               }
             >
               Something Went Wrong. Please try again
-            </h1>
+            </p>
             <button
               type="button"
               className="btn-try-again"
               onClick={() => this.getStories()}
             >
-              Try Again
+              Try again
             </button>
           </div>
         )
@@ -240,20 +242,23 @@ class Home extends Component {
         return (
           <div className="home-loading-container">
             <div className="loader-container">
-              <AiFillWarning color="#4094EF" size={22} />
-              <h1
+              <img
+                src="https://res.cloudinary.com/shafi-tech/image/upload/v1679546355/Icon_m4tnrl.png"
+                alt="failure view"
+              />
+              <p
                 className={
                   isDarkMode ? 'error-dark-heading' : 'error-light-heading'
                 }
               >
                 Something Went Wrong. Please try again
-              </h1>
+              </p>
               <button
                 type="button"
                 className="btn-try-again"
                 onClick={() => this.getPosts()}
               >
-                Try Again
+                Try again
               </button>
             </div>
           </div>
