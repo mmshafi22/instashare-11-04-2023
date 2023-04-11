@@ -59,7 +59,7 @@ class UserDetails extends Component {
   }
 
   renderLoader = () => (
-    <div className="user-loading-container" testid="loader">
+    <div className="user-loading-container">
       <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
     </div>
   )

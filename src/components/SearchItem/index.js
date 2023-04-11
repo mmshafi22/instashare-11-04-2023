@@ -26,7 +26,7 @@ const SearchItem = props => {
         const {isDarkMode, changeCategory, onClickLike} = value
         const textColor = isDarkMode ? 'search-text-dark' : 'search-text-light'
         return (
-          <li className="search-item" testid="searchItem">
+          <li className="search-item">
             <div className="search-name">
               <div className="search-user-img">
                 <img src={profilePic} alt="post author profile" />
@@ -48,7 +48,6 @@ const SearchItem = props => {
                   type="button"
                   className="search-btn-like"
                   onClick={() => onClickLike(postId)}
-                  testid="unLikeIcon"
                 >
                   <FcLike size={20} />
                 </button>
@@ -57,7 +56,6 @@ const SearchItem = props => {
                   type="button"
                   className="search-btn-like"
                   onClick={() => onClickLike(postId)}
-                  testid="likeIcon"
                 >
                   <BsHeart
                     size={20}

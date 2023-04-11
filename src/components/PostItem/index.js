@@ -26,7 +26,7 @@ const PostItem = props => {
         const {isDarkMode, changeCategory} = value
         const textColor = isDarkMode ? 'text-dark' : 'text-light'
         return (
-          <li className="post-item" testid="postItem">
+          <li className="post-item">
             <div className="user-name">
               <div className="user-img">
                 <img src={profilePic} alt="post author profile" />
@@ -46,7 +46,6 @@ const PostItem = props => {
                   type="button"
                   className="btn-like"
                   onClick={() => likeThePost(postId)}
-                  testid="unLikeIcon"
                 >
                   <FcLike size={20} />
                 </button>
@@ -55,7 +54,6 @@ const PostItem = props => {
                   type="button"
                   className="btn-like"
                   onClick={() => likeThePost(postId)}
-                  testid="likeIcon"
                 >
                   <BsHeart
                     size={20}

@@ -56,7 +56,7 @@ class SearchPage extends Component {
   )
 
   renderSearchLoading = () => (
-    <div className="initial-loading" testid="loader">
+    <div className="initial-loading">
       <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
     </div>
   )
@@ -162,7 +162,6 @@ class SearchPage extends Component {
                       isDarkMode ? 'icon-dark' : 'icon-light'
                     }`}
                     onClick={() => getSearchResults()}
-                    testid="searchIcon"
                   >
                     <FaSearch color="#262626" size={18} />
                   </button>

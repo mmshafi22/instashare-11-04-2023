@@ -173,7 +173,6 @@ class Navbar extends Component {
                         isDarkMode ? 'nav-icon-dark' : 'nav-icon-light'
                       }`}
                       onClick={() => getSearchResults()}
-                      testid="searchIcon"
                     >
                       <FaSearch color="#262626" size={18} />
                     </button>

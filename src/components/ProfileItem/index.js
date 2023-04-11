@@ -68,62 +68,6 @@ const ProfileItem = props => {
                 </p>
               </div>
             </div>
-            <div className="profile-mobile">
-              <h1
-                className={
-                  isDarkMode ? 'profile-name-dark' : 'profile-name-light'
-                }
-              >
-                {userName}
-              </h1>
-              <div className="profile-mobile-data">
-                <img
-                  src={profilePic}
-                  alt="my profile"
-                  className="profile-img"
-                />
-                <div className="profile-data">
-                  <div
-                    className={`profile-count ${
-                      isDarkMode ? 'profile-name-dark' : 'profile-name-light'
-                    }`}
-                  >
-                    <p className="profile-count-num">{postsCount}</p>
-                    <p className="profile-count-text">posts</p>
-                  </div>
-                  <div
-                    className={`profile-count ${
-                      isDarkMode ? 'profile-name-dark' : 'profile-name-light'
-                    }`}
-                  >
-                    <p className="profile-count-num">{followersCount}</p>
-                    <p className="profile-count-text">followers</p>
-                  </div>
-                  <div
-                    className={`profile-count ${
-                      isDarkMode ? 'profile-name-dark' : 'profile-name-light'
-                    }`}
-                  >
-                    <p className="profile-count-num">{followingCount}</p>
-                    <p className="profile-count-text">following</p>
-                  </div>
-                </div>
-              </div>
-              <p
-                className={`profile-user-id ${
-                  isDarkMode ? 'profile-name-dark' : 'profile-name-light'
-                }`}
-              >
-                {userId}
-              </p>
-              <p
-                className={`profile-bio ${
-                  isDarkMode ? 'profile-name-dark' : 'profile-name-light'
-                }`}
-              >
-                {userBio}
-              </p>
-            </div>
             <ul className="profile-stories-list-items">
               {stories.map(each => (
                 <li className="profile-story-item" key={each.id}>

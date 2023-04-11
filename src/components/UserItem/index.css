@@ -150,11 +150,7 @@ hr {
   margin: 0px;
   padding-bottom: 15px;
 }
-@media (max-width: 767px) {
-  .user-profile {
-    display: none;
-  }
-}
+
 @media (min-width: 768px) {
   .user-profile-img {
     width: 130px;

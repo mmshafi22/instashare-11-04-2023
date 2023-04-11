@@ -268,14 +268,14 @@ class Home extends Component {
   )
 
   renderLoaderView = () => (
-    <div className="loader-container" testid="loader">
+    <div className="loader-container">
       <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
     </div>
   )
 
   renderPostLoading = () => (
     <div className="home-loading-container">
-      <div className="loader-container" testid="loader">
+      <div className="loader-container">
         <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
       </div>
     </div>
