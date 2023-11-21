@@ -20,8 +20,8 @@ const searchStatus = {
 class App extends Component {
   state = {
     searchInput: '',
-    isDarkMode: false,
-    category: 'Home',
+    isDarkMode: localStorage.getItem('theme') === null ? false : Boolean(localStorage.getItem('theme')),
+    category: localStorage.getItem('category') === null ? 'Home' : localStorage.getItem('category),
     searchList: [],
     isFocused: false,
     searchLoading: searchStatus.initial,
@@ -100,14 +100,17 @@ class App extends Component {
   }
 
   changeFocus = () => {
-    this.setState({isFocused: true, category: 'Search'})
+    this.setState({isFocused: true})
   }
 
   changeTheme = () => {
-    this.setState(prev => ({isDarkMode: !prev.isDarkMode}))
+    const {isDarkMode} = this.state 
+    localStorage.setItem('theme',!isDarkMode)
+    this.setState({isDarkMode: !isDarkMode})
   }
 
   changeCategory = text => {
+    localStorage.setItem('category',text)
     this.setState({isFocused: false, category: text, searchInput: ''})
   }
 
