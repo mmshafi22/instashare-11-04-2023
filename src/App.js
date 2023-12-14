@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import {useState} from 'react'
 import Cookies from 'js-cookie'
 import {Switch, Route, Redirect} from 'react-router-dom'
 import ThemeContext from './context/ThemeContext'
@@ -17,20 +17,21 @@ const searchStatus = {
   inProgress: 'IN PROGRESS',
 }
 
-class App extends Component {
-  state = {
-    searchInput: '',
-    isDarkMode: localStorage.getItem('theme') === null ? false : Boolean(localStorage.getItem('theme')),
-    category: localStorage.getItem('category') === null ? 'Home' : localStorage.getItem('category),
-    searchList: [],
-    isFocused: false,
-    searchLoading: searchStatus.initial,
-  }
+const App = () => {
 
-  getSearchResults = async () => {
-    this.setState({searchLoading: searchStatus.inProgress})
+  const theme = localStorage.getItem('theme') === null ? false : Boolean(localStorage.getItem('theme'))
+  const activeTab = localStorage.getItem('category') === null ? 'Home' : localStorage.getItem('category')
+  const [searchInput,setInput] = useState('')
+  const [isDarkMode,setTheme] = useState(theme)
+  const [category,setCategory] = useState(activeTab)
+  const [searchList,addSearchList] = useState([])
+  const [searchLoading,setLoading] = useState(searchStatus.initial)
+  const [isFocused,setFocus] = useState(false)
+  
+
+  const getSearchResults = async () => {
+    setLoading(searchStatus.inProgress)
     const jwtToken = Cookies.get('jwt_token')
-    const {searchInput} = this.state
     const url = `https://apis.ccbp.in/insta-share/posts?search=${searchInput}`
     const options = {
       headers: {
@@ -56,17 +57,14 @@ class App extends Component {
         createdAt: each.created_at,
         likesStatus: false,
       }))
-      this.setState({
-        searchList: updatedList,
-        searchLoading: searchStatus.success,
-      })
+      addSearchList(updatedList)
+      setLoading(searchStatus.success)  
     } else {
-      this.setState({searchLoading: searchStatus.failure})
+      setLoading(searchStatus.failure)
     }
   }
 
-  onClickLike = async id => {
-    const {searchList} = this.state
+  const onClickLike = async id => {
     const jwtToken = Cookies.get('jwt_token')
     const obj = searchList.find(each => each.postId === id)
     const status = {like_status: !obj.likesStatus}
@@ -81,52 +79,35 @@ class App extends Component {
     const response = await fetch(url, options)
     const data = await response.json()
     if (data.message === 'Post has been liked') {
-      this.setState(prev => ({
-        searchList: prev.searchList.map(item =>
-          item.postId === id
-            ? {...item, likesStatus: true, likesCount: item.likesCount + 1}
-            : {...item},
-        ),
-      }))
+      const filteredList = searchList.map(item => item.postId === id ? {...item,likesStatus:true,likesCount: item.likesCount + 1} : 
+                                       {...item})
+        addSearchList(filteredList)
     } else {
-      this.setState(prev => ({
-        searchList: prev.searchList.map(item =>
-          item.postId === id
-            ? {...item, likesStatus: false, likesCount: item.likesCount - 1}
-            : {...item},
-        ),
-      }))
+      const filteredList = searchList.map(item => item.postId === id ? {...item,likesStatus:false,likesCount: item.likesCount - 1} : 
+        {...item})
+        addSearchList(filteredList)
     }
   }
 
-  changeFocus = () => {
-    this.setState({isFocused: true})
+  const changeFocus = () => {
+    setFocus(true)
   }
 
-  changeTheme = () => {
-    const {isDarkMode} = this.state 
+  const changeTheme = () => {
     localStorage.setItem('theme',!isDarkMode)
-    this.setState({isDarkMode: !isDarkMode})
+    setTheme(!isDarkMode)
   }
 
-  changeCategory = text => {
+  const changeCategory = text => {
     localStorage.setItem('category',text)
-    this.setState({isFocused: false, category: text, searchInput: ''})
+    setFocus(false)
+    setCategory(text)
+    setInput('')
   }
 
-  onChangeUsername = text => {
-    this.setState({searchInput: text})
+  const onChangeUsername = text => {
+    setInput(text)
   }
-
-  render() {
-    const {
-      isDarkMode,
-      category,
-      searchInput,
-      searchList,
-      isFocused,
-      searchLoading,
-    } = this.state
     return (
       <ThemeContext.Provider
         value={{
@@ -136,12 +117,12 @@ class App extends Component {
           searchList,
           isFocused,
           searchLoading,
-          changeTheme: this.changeTheme,
-          changeCategory: this.changeCategory,
-          changeFocus: this.changeFocus,
-          getSearchResults: this.getSearchResults,
-          onClickLike: this.onClickLike,
-          onChangeUsername: this.onChangeUsername,
+          changeTheme: changeTheme,
+          changeCategory: changeCategory,
+          changeFocus: changeFocus,
+          getSearchResults: getSearchResults,
+          onClickLike: onClickLike,
+          onChangeUsername: onChangeUsername,
         }}
       >
         <Switch>
@@ -155,6 +136,5 @@ class App extends Component {
       </ThemeContext.Provider>
     )
   }
-}
 
 export default App
